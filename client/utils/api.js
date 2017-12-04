@@ -9,13 +9,13 @@ class API {
     this.get = this.get.bind(this);
   }
 
-   async get(url) {
+  async get(url) {
     const method = "GET",
       response = await fetch(this.url + url, {
         method: method,
         headers: this.headers
       }).catch(err => console.log(err));
-      return await response.json();
+    return await response.json();
   }
 
   async post(url, data) {
@@ -23,7 +23,7 @@ class API {
     response = await fetch(this.url + url, {
       method: method,
       headers: this.headers,
-      body:data
+      body: data
     }).catch(err => console.log(err));
     return await response.json();
   }

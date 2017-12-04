@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "body-parser": "^1.16.1",
+    "cors": "^2.8.4",
     "express": "^4.14.1",
-    "node-fetch": "^1.7.3"
+    "node-fetch": "^1.7.3",
+    "superdom": "^1.3.0"
   }
 }

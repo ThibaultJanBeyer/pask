@@ -45,7 +45,7 @@ if (env)
   );
 
 export default {
-  input: "public/client/app.js",
+  input: "client/app.js",
   name: "app",
   plugins: plugins,
   output: {

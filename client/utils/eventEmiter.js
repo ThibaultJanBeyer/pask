@@ -22,5 +22,4 @@ class EventEmmitter {
   }
 }
 
-
 export default new EventEmmitter();
