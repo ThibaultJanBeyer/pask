@@ -1,0 +1,9 @@
+@import "./settings.scss";
+@import "./options/options.scss";
+
+
+body {
+  background: $green;
+  padding:2% 10%;
+  font-family: Sniglet;
+}

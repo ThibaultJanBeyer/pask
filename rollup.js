@@ -16,10 +16,11 @@ let plugins = [
       postcss([autoprefixer])
         .process(css)
         .then(result => result.css),
-    output: "public/bundle.css"
+    output: "public/bundle.css",
+    failOnError: true
   }),
   rootImport({
-    root: "/public/client",
+    root: "/client",
     useEntry: "prepend",
     extensions: ".js"
   }),

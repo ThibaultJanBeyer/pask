@@ -1,4 +1,6 @@
-import dom from "superdom";
+import dom from "dom-template-strings";
+import Pikaday from "pikaday";
+import moment from "moment";
 
 class Component extends HTMLElement {
   constructor(container) {
@@ -8,15 +10,38 @@ class Component extends HTMLElement {
   }
 
   connectedCallback() {
-    this.createBody();
+    const body = this.createBody();
+
+    this.appendChild(body);
+
+    this.calender = new Pikaday({
+      field: document.getElementById("calender"),
+      format: "yyyy/mm/dd",
+      defaultDate: moment().format("MMM YYYY"),
+      setDefaultDate: true,
+      onSelect: date => {
+        this.calender._o.field.value = moment(date).format("L");
+      }
+    });
   }
 
   createBody() {
-    const containerElement = `<fieldset id="tracker-actions">
-                                <legend>Options</legend>
-                              </fieldset>`;
+    const date = dom`<div id="date-container">
+                      <label for="calender"> Date: </label>
+                      <input
+                        id="calender"
+                        type="text"
+                        value=${moment().format("L")}
+                        readonly
+                      />
+                    </div>
+                   `
+    const containerElement = dom`<fieldset id="tracker-options">
+                                    <legend>Options</legend>
+                                    ${date}
+                                </fieldset>`;
 
-    this.innerHTML = containerElement;
+    return containerElement;
   }
 }
 

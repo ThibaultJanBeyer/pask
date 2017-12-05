@@ -1,4 +1,4 @@
-import dom from "superdom";
+import dom from "dom-template-strings";
 
 class Component extends HTMLElement {
   constructor(container) {
@@ -11,18 +11,19 @@ class Component extends HTMLElement {
   connectedCallback() {
     this.createBody();
   }
-  
-  sendMessage(){
+
+  sendMessage() {
     this.events.emit("test");
   }
 
   createBody() {
-    const button = dom(`<button>Button</button>`);
-          button.on.click = this.sendMessage;
-    const containerElement = dom(`<fieldset id="tracker-actions">
+    const button = dom`<button>Button</button>`;
+    button.onclick = this.sendMessage;
+    const containerElement = dom`<fieldset id="tracker-actions">
                                 <legend>Trackers</legend>
-                              </fieldset>`);
-    this.innerHTML = 
+                                ${button}
+                              </fieldset>`;
+    this.appendChild(containerElement);
   }
 }
 

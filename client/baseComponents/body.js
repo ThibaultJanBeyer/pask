@@ -1,30 +1,35 @@
-import dom from "superdom";
+import dom from "dom-template-strings";
 
 class Component extends HTMLElement {
   constructor(container) {
     super();
     this.container = container;
-    this.events = this.container.get("events")
+    this.events = this.container.get("events");
+    this.elements = ["data"];
   }
 
   connectedCallback() {
-    this.createBody();
-    this.events.on("test", this.addElement);
+    const body = this.createBody();
+    this.appendChild(body);
+    this.events.on("test", this.addElement.bind(this));
   }
-  
+
   addElement() {
-    const main = dom.id.items,
-          data = dom`<p>new item</p>`;
-          main.appendChild(data);  
+    this.elements.push("new");
+    const body = this.createBody();
+    this.replaceChild(body, this.children[0]);
   }
 
   createBody() {
-    const containerElement = `<fieldset id="entry-container">
+    const items = dom`${this.elements.map(item => {
+        return dom`<span>${item}</span>`;
+      })}`,
+      containerElement = dom`<fieldset id="entry-container">
                                 <legend>Options</legend>
                                 <section id="items"></section>
+                                ${items}
                               </fieldset>`;
-
-    this.innerHTML = containerElement;
+    return containerElement;
   }
 }
 

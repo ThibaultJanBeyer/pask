@@ -6,18 +6,25 @@ class EventEmmitter {
   on(name, fnc) {
     if (!this.events[name]) {
       this.events[name] = new Array();
+      this.events[name].push(fnc);
     } else {
       this.events[name].push(fnc);
+    }
+  }
+
+  destroy(name) {
+    if (this.events[name]) {
+      delete this.events[name];
     }
   }
 
   emit(name, data) {
     if (this.events[name]) {
       this.events[name].forEach(callFunc => {
-        callFunc.bind(this, data);
+        callFunc.apply(this, data);
       });
     } else {
-      console.log(`Emmiter ${name} not found`);
+      console.log(`Emit reciever for ${name} not found!`);
     }
   }
 }

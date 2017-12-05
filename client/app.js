@@ -1,3 +1,4 @@
+import "./styles/main.scss";
 import * as baseComponents from "./baseComponents";
 import * as minorComponents from "./minorComponents";
 import * as utils from "./utils";
