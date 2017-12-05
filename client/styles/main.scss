@@ -1,9 +1,22 @@
 @import "./settings.scss";
-@import "./options/options.scss";
-
+@import "./components/options.scss";
+@import "./components/tracker.scss";
+@import "./components/body.scss";
 
 body {
   background: $green;
-  padding:2% 10%;
+  padding: 2% 10%;
   font-family: Sniglet;
+
+  legend {
+    background: $white;
+    border-top: 1px solid $grey;
+    border-left: 1px solid $grey;
+    border-right: 1px solid $grey;
+    padding: 2px 4px;
+  }
+
+  fieldset {
+    border-color: $grey;
+  }
 }

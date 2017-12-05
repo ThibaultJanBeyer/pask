@@ -2,7 +2,45 @@
 #tracker-options {
   background: #FBFBFB; }
 
+tracker-el {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  border: solid 1px rgba(227, 227, 223, 0.5);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+  width: 300px;
+  margin: 10px 5px; }
+
+body-el {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  background: #FBFBFB;
+  width: 100%; }
+
 body {
   background: #8BBE5C;
   padding: 2% 10%;
   font-family: Sniglet; }
+  body legend {
+    background: #FBFBFB;
+    border-top: 1px solid #E3E3DF;
+    border-left: 1px solid #E3E3DF;
+    border-right: 1px solid #E3E3DF;
+    padding: 2px 4px; }
+  body fieldset {
+    border-color: #E3E3DF; }

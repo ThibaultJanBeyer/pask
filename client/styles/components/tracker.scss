@@ -1,0 +1,10 @@
+tracker-el {
+  display: flex;
+  flex-flow: column;
+  border: solid 1px rgba($grey, 0.5);
+  align-items: center;
+  justify-content: center;
+  padding:10px;
+  width: 300px;
+  margin:10px 5px;
+}

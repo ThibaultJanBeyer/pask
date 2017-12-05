@@ -1,9 +1,13 @@
 class API {
   constructor() {
     this.url = "http://localhost:8080/api/";
-    this.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+    this.settings = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      mode: "cors",
+      cache: "default"
     };
     this.post = this.post.bind(this);
     this.get = this.get.bind(this);
@@ -11,20 +15,19 @@ class API {
 
   async get(url) {
     const method = "GET",
-      response = await fetch(this.url + url, {
-        method: method,
-        headers: this.headers
-      }).catch(err => console.log(err));
+      settings = this.settings;
+    settings.method = method;
+    const response = await fetch(url, settings).catch(err => console.log(err));
     return await response.json();
   }
 
   async post(url, data) {
-    const method = "POST";
-    response = await fetch(this.url + url, {
-      method: method,
-      headers: this.headers,
-      body: data
-    }).catch(err => console.log(err));
+    const method = "POST",
+      settings = this.settings;
+    settings.method = method;
+    const response = await fetch(url, this.settings).catch(err =>
+      console.log(err)
+    );
     return await response.json();
   }
 }
