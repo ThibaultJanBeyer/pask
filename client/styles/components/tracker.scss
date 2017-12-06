@@ -4,7 +4,35 @@ tracker-el {
   border: solid 1px rgba($grey, 0.5);
   align-items: center;
   justify-content: center;
-  padding:10px;
-  width: 300px;
-  margin:10px 5px;
+  padding: 10px;
+  width: 200px;
+  margin: 10px 5px;
+  cursor: pointer;
+  background: rgba($grey, 0.5);
+  transition: 0.2s ease;
+  height:220px;
+  
+  h4 {
+    font-size: 20px;
+  }
+
+  .tracker-item-tags {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:6px;
+    
+    span {
+      margin:2px 1px;
+      padding:2px 4px;
+      background: rgba($green, 0.3);
+    }
+  }
+
+  &:hover {
+    background: $grey;
+    box-shadow: $boxshadow;
+    transition: 0.2s ease;
+  }
 }

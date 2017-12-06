@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": " npm run scss | rollup --watch --config rollup.js | node --experimental-modules ./server/index.mjs",
-    "scss":"node-sass -w client/styles/main.scss public/bundle.css",
+    "scss":"node-sass -w -r client/styles/main.scss public/bundle.css",
     "build": "NODE_ENV=production rollup --config rollup.js || autoprefixer -b 'last 2 versions' < public/bundle.css"
   },
   "author": "",

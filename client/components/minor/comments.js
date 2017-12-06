@@ -1,4 +1,4 @@
-import dom from "superdom";
+
 
 class Component extends HTMLElement {
   constructor(container) {

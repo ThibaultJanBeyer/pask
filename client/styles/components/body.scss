@@ -2,7 +2,34 @@ body-el {
   display: flex;
   flex-flow: row wrap;
   background: $white;
+  padding:30px 0;
   width:100%;
   justify-content: center;
+  #create-new-tracker {
+    width: 200px;
+    height: 220px;
+    background: $green;
+    background-image: url("images/tabs.svg");
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
+    background-position: 50% 30%;
+    margin: 10px 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: 0.2s ease;
+    cursor: pointer;
+    color: black;
+    &:hover {
+      transition: 0.2s ease;
+      background: darken($green, 7);
+      background-image: url("images/tabs.svg");
+      background-image: url("images/tabs.svg");
+      background-repeat: no-repeat;
+      background-size: 90px 90px;
+      background-position: 50% 30%;
+    }
+  }
 }
  

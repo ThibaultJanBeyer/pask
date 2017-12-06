@@ -1,12 +1,14 @@
+import Router from "./router";
+
 class Engine {
   constructor() {
     this.container = new Map();
+    this.router = new Router(true);
   }
 
-  registerComponents(components) {
-    this.registerUtils(components["utils"]);
-    this.registerBaseComponents(components["baseComponents"]);
-    this.registerMinorComponents(components["minorComponents"]);
+  registerComponents(items) {
+    this.registerUtils(items["utils"]);
+    this.registerComponents(items["components"]);
   }
 
   registerUtils(utils) {
@@ -15,16 +17,7 @@ class Engine {
     }
   }
 
-  registerBaseComponents(components) {
-    for (const key in components) {
-      const name = `${key}-el`;
-      customElements.define(name, components[key]);
-      const Element = customElements.get(name);
-      document.body.appendChild(new Element(this.container));
-    }
-  }
-
-  registerMinorComponents(components) {
+  registerComponents(components) {
     for (const key in components) {
       const name = `${key}-el`;
       customElements.define(name, components[key]);

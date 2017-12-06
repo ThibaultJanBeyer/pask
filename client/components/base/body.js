@@ -18,9 +18,12 @@ class Component extends HTMLElement {
 
   createBody(data) {
     const Tracker = customElements.get("tracker-el");
-    return dom`${data.map(item => {
-                    return new Tracker(item);
-                  })}
+    return dom`<div id="create-new-tracker">
+                  <span>Create new Tracker</span>
+                </div>
+                ${data.map(item => {
+                  return new Tracker(item);
+                })}
             `;
   }
 }
