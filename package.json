@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "rollup --watch --config rollup.js | node --experimental-modules ./server/index.mjs",
-    "build": "NODE_ENV=production rollup --config rollup.js"
+    "dev": " npm run scss | rollup --watch --config rollup.js | node --experimental-modules ./server/index.mjs",
+    "scss":"node-sass -w client/styles/main.scss public/bundle.css",
+    "build": "NODE_ENV=production rollup --config rollup.js || autoprefixer -b 'last 2 versions' < public/bundle.css"
   },
   "author": "",
   "license": "ISC",
@@ -23,14 +24,13 @@
     "rollup-plugin-node-resolve": "latest",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-root-import": "^0.2.2",
-    "rollup-plugin-scss": "latest",
+    "dom-template-strings": "^2.4.2",
     "rollup-plugin-uglify": "latest",
     "rollup-watch": "^2.5.0"
   },
   "dependencies": {
     "body-parser": "^1.16.1",
     "cors": "^2.8.4",
-    "dom-template-strings": "^2.4.2",
     "express": "^4.14.1",
     "node-fetch": "^1.7.3"
   }
