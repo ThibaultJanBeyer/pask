@@ -1,12 +1,26 @@
-import Router from "./router";
+import route from 'roadtrip'
 
 class Engine {
   constructor() {
     this.container = new Map();
-    this.router = new Router(true);
+    this.router = route;
   }
 
-  registerComponents(items) {
+  render(name) {
+    const Element = customElements.get(name),
+      component = new Element(this.container);
+
+    if (this.activeComponent) {
+      document.body.removeChild(this.activeComponent);
+      document.body.appendChild(component);
+      this.activeComponent = component;
+    } else {
+      document.body.appendChild(component);
+      this.activeComponent = component;
+    }
+  }
+
+  register(items) {
     this.registerUtils(items["utils"]);
     this.registerComponents(items["components"]);
   }
@@ -15,6 +29,7 @@ class Engine {
     for (const key in utils) {
       this.container.set(key, utils[key]);
     }
+    this.container.set("router", this.router);
   }
 
   registerComponents(components) {

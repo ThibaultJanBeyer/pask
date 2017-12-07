@@ -32,47 +32,41 @@ tracker-el {
     box-shadow: 1px 2px 4px 0px rgba(189, 196, 206, 0.6);
     transition: 0.2s ease; }
 
-body-el {
+body-el #create-new-tracker {
+  width: 200px;
+  height: 220px;
+  background: #71a542;
+  background-image: url("images/tabs.svg");
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+  background-position: 50% 30%;
+  margin: 10px 5px;
+  padding: 10px;
   display: flex;
-  flex-flow: row wrap;
-  background: #FBFBFB;
-  padding: 30px 0;
-  width: 100%;
-  justify-content: center; }
-  body-el #create-new-tracker {
-    width: 200px;
-    height: 220px;
-    background: #8BBE5C;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+  cursor: pointer;
+  color: black; }
+  body-el #create-new-tracker span {
+    margin-bottom: -80px;
+    transition: 0.2s ease; }
+  body-el #create-new-tracker:hover {
+    transition: 0.2s ease;
+    background: #7bb448;
+    background-image: url("images/tabs.svg");
     background-image: url("images/tabs.svg");
     background-repeat: no-repeat;
     background-size: 100px 100px;
-    background-position: 50% 30%;
-    margin: 10px 5px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    transition: 0.2s ease;
-    cursor: pointer;
-    color: black; }
-    body-el #create-new-tracker:hover {
-      transition: 0.2s ease;
-      background: #79b046;
-      background-image: url("images/tabs.svg");
-      background-image: url("images/tabs.svg");
-      background-repeat: no-repeat;
-      background-size: 90px 90px;
-      background-position: 50% 30%; }
+    background-position: 50% 30%; }
 
 body {
   background: #8BBE5C;
   padding: 2% 10%;
   font-family: Sniglet; }
-  body legend {
-    background: #FBFBFB;
-    border-top: 1px solid #E3E3DF;
-    border-left: 1px solid #E3E3DF;
-    border-right: 1px solid #E3E3DF;
-    padding: 2px 4px; }
-  body fieldset {
-    border-color: #E3E3DF; }
+  body .container {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 30px 0;
+    width: 100%;
+    justify-content: center; }

@@ -1,6 +1,6 @@
 //Base
 export {default as body} from "./base/body";
-export {default as trackers} from "./base/trackers";
+export {default as newtracker} from "./base/newtracker";
 
 
 //Minor

@@ -5,6 +5,8 @@ class Component extends HTMLElement {
     super();
     this.events = container.get("events");
     this.api = container.get("api");
+    this.router = container.get("router");
+    this.className = "container";
   }
 
   async connectedCallback() {
@@ -16,15 +18,22 @@ class Component extends HTMLElement {
     }
   }
 
+  createNew() {
+    this.router.goto("/new");
+  }
+
   createBody(data) {
-    const Tracker = customElements.get("tracker-el");
-    return dom`<div id="create-new-tracker">
-                  <span>Create new Tracker</span>
-                </div>
-                ${data.map(item => {
-                  return new Tracker(item);
-                })}
-            `;
+    const Tracker = customElements.get("tracker-el"),
+      newTracker = dom`<div id="create-new-tracker">
+                        <span>Create new Tracker</span>
+                      </div>`;
+    newTracker.onclick = this.createNew.bind(this);
+
+    return dom`
+      ${newTracker}
+      ${data.map(item => {
+        return new Tracker(item);
+      })}`;
   }
 }
 

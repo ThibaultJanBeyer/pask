@@ -8,7 +8,6 @@ class Component extends HTMLElement {
 
   connectedCallback() {
     const body = this.createBody();
-    console.log(this.data)
     this.appendChild(body);
   }
 

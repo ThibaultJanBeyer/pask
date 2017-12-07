@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": " npm run scss | rollup --watch --config rollup.js | node --experimental-modules ./server/index.mjs",
-    "scss":"node-sass -w -r client/styles/main.scss public/bundle.css",
+    "scss": "node-sass -w -r client/styles/main.scss public/bundle.css",
     "build": "NODE_ENV=production rollup --config rollup.js || autoprefixer -b 'last 2 versions' < public/bundle.css"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "prettier": "^1.5.3",
     "quill": "^1.3.3",
     "rollup": "latest",
+    "node-sass": "latest",
     "rollup-plugin-commonjs": "^6.0.0",
     "rollup-plugin-json": "latest",
     "rollup-plugin-node-resolve": "latest",
@@ -32,6 +33,9 @@
     "body-parser": "^1.16.1",
     "cors": "^2.8.4",
     "express": "^4.14.1",
-    "node-fetch": "^1.7.3"
+    "node-fetch": "^1.7.3",
+    "page": "^1.7.1",
+    "riot-route": "^3.1.2",
+    "roadtrip": "^0.6.0"
   }
 }

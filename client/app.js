@@ -1,5 +1,6 @@
 import * as components from "./components";
 import * as utils from "./utils";
+
 import Engine from "./engine";
 
 const container = {
@@ -7,10 +8,22 @@ const container = {
   components
 };
 
-Engine.registerComponents(components);
-Engine.router.navigate("/new")
+Engine.register(container);
 
 
-setTimeout(() => {
-  Engine.router.navigate("/old")
-}, 1000)
+
+Engine.router
+  .add("/", {
+    enter: router => {
+      Engine.render("body-el");
+      console.log("home");
+    }
+  })
+  .add("/new", {
+    enter: () => {
+      Engine.render("newtracker-el");
+    }
+  })
+  .start({
+    fallback: "/" // if the current URL matches no route, use this one
+  });
