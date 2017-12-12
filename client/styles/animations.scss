@@ -1,0 +1,16 @@
+@keyframes swing {
+  from {
+    transform-origin: top;
+    transform: rotateX(0);
+  }
+
+  45% {
+    transform-origin: top;
+    transform: rotateX(-60deg);
+  }
+
+  to {
+    transform-origin: top;
+    transform: rotateX(0);
+  }
+}

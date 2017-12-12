@@ -1,7 +1,11 @@
 @import "./settings.scss";
+@import "./animations.scss";
 @import "./components/options.scss";
 @import "./components/tracker.scss";
 @import "./components/body.scss";
+@import "./components/description.scss";
+@import "./components/comments.scss";
+@import "./components/sliders.scss";
 
 body {
   background: $green;
@@ -14,5 +18,65 @@ body {
     padding: 30px 0;
     width: 100%;
     justify-content: center;
+  }
+}
+
+.fieldset {
+  position: relative;
+  border: solid 2px $grey;
+
+  .legend {
+    position: absolute;
+    left: 5%;
+    top: -20px;
+    background: $white;
+    padding: 3px 8px;
+    border: solid 1px $grey;
+    border-bottom: none;
+  }
+}
+
+.option {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .label {
+    margin-right: -4px;
+    background: $grey;
+    padding: 6px 7px;
+    z-index: 5;
+    font-size: 13px;
+  }
+
+  input::placeholder {
+    color: $text-black;
+  }
+
+  input {
+    padding: 3px 8px;
+    z-index: 2;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    border-right: solid 1px $grey;
+    border-top: solid 1px $grey;
+    border-bottom: solid 1px $grey;
+    font-family: Sniglet;
+    font-size: 12px;
+  }
+  margin: 0 6px;
+
+  .date {
+    width: 100px;
+    text-align: left;
+    padding-left: 10px;
+    cursor: pointer;
+    color: #2c3e50;
+    background-color: $grey;
+    background-image: url("images/calendar.svg");
+    font-weight: bold;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
   }
 }

@@ -1,5 +1,4 @@
 body-el {
-
   #create-new-tracker {
     width: 200px;
     height: 220px;
@@ -16,10 +15,12 @@ body-el {
     transition: 0.2s ease;
     cursor: pointer;
     color: black;
+
     span {
       margin-bottom: -80px;
       transition: 0.2s ease;
     }
+
     &:hover {
       transition: 0.2s ease;
       background: darken($green, 6);
@@ -31,4 +32,3 @@ body-el {
     }
   }
 }
- 

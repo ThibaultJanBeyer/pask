@@ -1,0 +1,38 @@
+description-el {
+  #description {
+    background: $white;
+    min-height: 24px;
+  }
+
+  .label {
+    max-height: 16px;
+  }
+
+  .text-input {
+    font-size: 12px;
+    padding: 5px 4px 3px 10px;
+    width: 220px;
+    color: black;
+    outline: none;
+    border-top: solid 1px $grey;
+    border-right: solid 1px $grey;
+    border-bottom: solid 1px $grey;
+  }
+
+  .hashtag {
+    background: blue;
+    color: white;
+    padding: 1px 2px;
+    border-radius: 2px;
+  }
+
+  [placeholder]:empty:before {
+    display: block;
+    content: attr(placeholder);
+    color: $text-black;
+  }
+
+  [placeholder]:empty:focus:before {
+    content: "";
+  }
+}
