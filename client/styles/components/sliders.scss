@@ -2,7 +2,22 @@
   display: flex;
   flex-flow: column;
   width: 75%;
-  min-height: 500px;
+  min-height: 200px;
   padding: 15px 5px;
   margin-top: 50px;
+}
+
+slider-el {
+  display: flex;
+  flex-flow: column;
+  input {
+    width: 300px;
+  }
+  .range-lower {
+    fill:green;
+  }
+  
+  .range-higher {
+    fill:red;
+  }
 }

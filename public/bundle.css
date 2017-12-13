@@ -145,15 +145,25 @@ comments-el #comments {
 
 comments-el .ql-toolbar {
   background: #FBFBFB;
-  margin-top: 130px; }
+  margin-top: 20px; }
 
 #slider-container {
   display: flex;
   flex-flow: column;
   width: 75%;
-  min-height: 500px;
+  min-height: 200px;
   padding: 15px 5px;
   margin-top: 50px; }
+
+slider-el {
+  display: flex;
+  flex-flow: column; }
+  slider-el input {
+    width: 300px; }
+  slider-el .range-lower {
+    fill: green; }
+  slider-el .range-higher {
+    fill: red; }
 
 body {
   background: #8BBE5C;
