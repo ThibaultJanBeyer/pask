@@ -10,14 +10,56 @@
 slider-el {
   display: flex;
   flex-flow: column;
-  input {
-    width: 300px;
+
+  svg {
+    transition: 0.2s ease;
   }
+
+  path {
+    transform-origin: center;
+    transform: scale(1, 1);
+  }
+
   .range-lower {
-    fill:green;
+    fill: #26A65B;
+    transition: 0.2s ease;
   }
-  
+
+  .range-selected {
+    transition: 0.2s ease;
+    transform: scale(1, 1.6) translate(0, -77px);
+    fill: #26A65B;
+  }
+
   .range-higher {
-    fill:red;
+    fill: $grey;
+    transition: 0.2s ease;
+  }
+
+  input[type=range] {
+    width: 180px;
+    background: transparent;
+    -webkit-appearance: none;
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background: $grey;
+    cursor: pointer;
+    margin-left: -3px;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
   }
 }

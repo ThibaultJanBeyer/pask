@@ -158,12 +158,42 @@ comments-el .ql-toolbar {
 slider-el {
   display: flex;
   flex-flow: column; }
-  slider-el input {
-    width: 300px; }
+  slider-el svg {
+    transition: 0.2s ease; }
+  slider-el path {
+    transform-origin: center;
+    transform: scale(1, 1); }
   slider-el .range-lower {
-    fill: green; }
+    fill: #26A65B;
+    transition: 0.2s ease; }
+  slider-el .range-selected {
+    transition: 0.2s ease;
+    transform: scale(1, 1.6) translate(0, -77px);
+    fill: #26A65B; }
   slider-el .range-higher {
-    fill: red; }
+    fill: #E3E3DF;
+    transition: 0.2s ease; }
+  slider-el input[type=range] {
+    width: 180px;
+    background: transparent;
+    -webkit-appearance: none;
+    outline: none; }
+  slider-el input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background: #E3E3DF;
+    cursor: pointer;
+    margin-left: -3px; }
+  slider-el input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer; }
 
 body {
   background: #8BBE5C;
