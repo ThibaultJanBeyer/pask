@@ -1,7 +1,8 @@
 #slider-container {
   display: flex;
-  flex-flow: column;
-  width: 75%;
+  flex-flow: row wrap;
+  width: 80%;
+  justify-content: center;
   min-height: 200px;
   padding: 15px 5px;
   margin-top: 50px;
@@ -10,6 +11,10 @@
 slider-el {
   display: flex;
   flex-flow: column;
+  margin: 35px;
+  position: relative;
+  height: 90px;
+  --range-value: 15%;
 
   svg {
     transition: 0.2s ease;
@@ -20,15 +25,55 @@ slider-el {
     transform: scale(1, 1);
   }
 
+  .rangeValue {
+    position: absolute;
+    top: -5px;
+  }
+
+  .destroy-tracker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+    cursor: pointer;
+  }
+
+  .unvalid {
+    background-image:url("images/attention2.svg");
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    transform-origin: top;
+    animation-name: shake;
+    animation-duration: 0.5s;
+  }
+
+  .range-name {
+    margin: 0;
+    position: absolute;
+    left: -10px;
+    bottom: 0;
+
+    .label {
+      height: 10px;
+    }
+
+    input {
+      color: $text-black;
+      text-align: center;
+    }
+  }
+
   .range-lower {
-    fill: #26A65B;
+    fill: $dark-green;
     transition: 0.2s ease;
   }
 
   .range-selected {
     transition: 0.2s ease;
-    transform: scale(1, 1.6) translate(0, -77px);
-    fill: #26A65B;
+    transform: scale(1.5, 1.6) translate(0, -8px);
+    fill: $dark-green;
   }
 
   .range-higher {
@@ -37,29 +82,32 @@ slider-el {
   }
 
   input[type=range] {
-    width: 180px;
-    background: transparent;
+    width: 165px;
+    background: $grey;
+    height: 5px;
     -webkit-appearance: none;
     outline: none;
+    margin-left: -10px;
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(var(--range-value), $dark-green), color-stop(var(--range-value), $grey));
   }
 
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 3px;
-    background: $grey;
+    height: 22px;
+    width: 22px;
+    background: $dark-green;
     cursor: pointer;
     margin-left: -3px;
+    border-radius: 60px;
   }
 
   input[type=range]::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 16px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
+    -webkit-appearance: none;
+    height: 22px;
+    width: 22px;
+    background: $dark-green;
     cursor: pointer;
+    margin-left: -3px;
+    border-radius: 60px;
   }
 }

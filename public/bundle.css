@@ -1,24 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=Sniglet");
-@keyframes swing {
+@keyframes shake {
   from {
-    transform-origin: top;
-    transform: rotateX(0); }
-  45% {
-    transform-origin: top;
-    transform: rotateX(-60deg); }
+    transform: rotateZ(0); }
+  25% {
+    transform: rotateZ(-5deg); }
+  65% {
+    transform: rotateZ(5deg); }
   to {
-    transform-origin: top;
-    transform: rotateX(0); } }
+    transform: rotateZ(0); } }
 
 #options {
   background: #FBFBFB;
-  width: 75%;
   display: flex;
   flex-flow: row;
   padding: 15px 5px;
   justify-content: flex-start;
   align-items: center;
-  box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2); }
+  box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
+  width: 100%; }
   #options #option-inputs {
     display: flex;
     flex-flow: column;
@@ -29,26 +28,6 @@
     position: absolute;
     right: 10px;
     top: 10px; }
-  #options #add-new-tracker {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    position: absolute;
-    bottom: -48px;
-    left: -2px;
-    box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
-    background: rgba(85, 85, 85, 0.7);
-    transition: 0.2s; }
-    #options #add-new-tracker span {
-      padding: 8px 15px;
-      color: #FBFBFB;
-      cursor: pointer; }
-    #options #add-new-tracker:hover {
-      background: rgba(85, 85, 85, 0.8);
-      transition: 0.2s; }
-    #options #add-new-tracker:active {
-      background: rgba(85, 85, 85, 0.9);
-      transition: 0.2s; }
 
 tracker-el {
   display: flex;
@@ -80,33 +59,59 @@ tracker-el {
     box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
     transition: 0.2s ease; }
 
-body-el #create-new-tracker {
-  width: 200px;
-  height: 220px;
-  background: #71a542;
-  background-image: url("images/tabs.svg");
-  background-repeat: no-repeat;
-  background-size: 100px 100px;
-  background-position: 50% 30%;
-  margin: 10px 5px;
-  padding: 10px;
+home-el {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.2s ease;
-  cursor: pointer;
-  color: black; }
-  body-el #create-new-tracker span {
-    margin-bottom: -80px;
-    transition: 0.2s ease; }
-  body-el #create-new-tracker:hover {
-    transition: 0.2s ease;
-    background: #7bb448;
-    background-image: url("images/tabs.svg");
+  flex-flow: row; }
+  home-el #create-new-tracker {
+    width: 200px;
+    height: 220px;
+    background: #71a542;
     background-image: url("images/tabs.svg");
     background-repeat: no-repeat;
     background-size: 100px 100px;
-    background-position: 50% 30%; }
+    background-position: 50% 30%;
+    margin: 10px 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease;
+    cursor: pointer;
+    color: black; }
+    home-el #create-new-tracker span {
+      margin-bottom: -80px;
+      transition: 0.2s ease; }
+    home-el #create-new-tracker:hover {
+      transition: 0.2s ease;
+      background: #7bb448;
+      background-image: url("images/tabs.svg");
+      background-image: url("images/tabs.svg");
+      background-repeat: no-repeat;
+      background-size: 100px 100px;
+      background-position: 50% 30%; }
+
+newtracker-el {
+  flex-flow: column;
+  align-items: center; }
+  newtracker-el #actions {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-self: flex-start; }
+    newtracker-el #actions span {
+      padding: 8px 15px;
+      color: #FBFBFB;
+      cursor: pointer;
+      box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
+      background: rgba(85, 85, 85, 0.7);
+      transition: 0.2s;
+      margin: 0 10px; }
+      newtracker-el #actions span:hover {
+        background: rgba(85, 85, 85, 0.8);
+        transition: 0.2s; }
+      newtracker-el #actions span:active {
+        background: rgba(85, 85, 85, 0.9);
+        transition: 0.2s; }
 
 description-el #description {
   background: #FBFBFB;
@@ -121,8 +126,6 @@ description-el .text-input {
   width: 220px;
   color: black;
   outline: none;
-  border-top: solid 1px #E3E3DF;
-  border-right: solid 1px #E3E3DF;
   border-bottom: solid 1px #E3E3DF; }
 
 description-el .hashtag {
@@ -139,61 +142,98 @@ description-el [placeholder]:empty:before {
 description-el [placeholder]:empty:focus:before {
   content: ""; }
 
-comments-el #comments {
-  background: #FBFBFB;
-  width: 60vw; }
-
-comments-el .ql-toolbar {
-  background: #FBFBFB;
-  margin-top: 20px; }
+comments-el {
+  width: 50vw;
+  margin: 0 auto; }
+  comments-el #comments {
+    background: #FBFBFB; }
+  comments-el .ql-toolbar {
+    background: #FBFBFB;
+    margin-top: 20px; }
 
 #slider-container {
   display: flex;
-  flex-flow: column;
-  width: 75%;
+  flex-flow: row wrap;
+  width: 80%;
+  justify-content: center;
   min-height: 200px;
   padding: 15px 5px;
   margin-top: 50px; }
 
 slider-el {
   display: flex;
-  flex-flow: column; }
+  flex-flow: column;
+  margin: 35px;
+  position: relative;
+  height: 90px;
+  --range-value: 15%; }
   slider-el svg {
     transition: 0.2s ease; }
   slider-el path {
     transform-origin: center;
     transform: scale(1, 1); }
+  slider-el .rangeValue {
+    position: absolute;
+    top: -5px; }
+  slider-el .destroy-tracker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+    cursor: pointer; }
+  slider-el .unvalid {
+    background-image: url("images/attention2.svg");
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    transform-origin: top;
+    animation-name: shake;
+    animation-duration: 0.5s; }
+  slider-el .range-name {
+    margin: 0;
+    position: absolute;
+    left: -10px;
+    bottom: 0; }
+    slider-el .range-name .label {
+      height: 10px; }
+    slider-el .range-name input {
+      color: rgba(0, 0, 0, 0.8);
+      text-align: center; }
   slider-el .range-lower {
-    fill: #26A65B;
+    fill: #4183D7;
     transition: 0.2s ease; }
   slider-el .range-selected {
     transition: 0.2s ease;
-    transform: scale(1, 1.6) translate(0, -77px);
-    fill: #26A65B; }
+    transform: scale(1.5, 1.6) translate(0, -8px);
+    fill: #4183D7; }
   slider-el .range-higher {
     fill: #E3E3DF;
     transition: 0.2s ease; }
   slider-el input[type=range] {
-    width: 180px;
-    background: transparent;
+    width: 165px;
+    background: #E3E3DF;
+    height: 5px;
     -webkit-appearance: none;
-    outline: none; }
+    outline: none;
+    margin-left: -10px;
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(var(--range-value), #4183D7), color-stop(var(--range-value), #E3E3DF)); }
   slider-el input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 3px;
-    background: #E3E3DF;
+    height: 22px;
+    width: 22px;
+    background: #4183D7;
     cursor: pointer;
-    margin-left: -3px; }
+    margin-left: -3px;
+    border-radius: 60px; }
   slider-el input[type=range]::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 16px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer; }
+    -webkit-appearance: none;
+    height: 22px;
+    width: 22px;
+    background: #4183D7;
+    cursor: pointer;
+    margin-left: -3px;
+    border-radius: 60px; }
 
 body {
   background: #8BBE5C;
@@ -201,7 +241,6 @@ body {
   font-family: Sniglet; }
   body .container {
     display: flex;
-    flex-flow: row wrap;
     padding: 30px 0;
     width: 100%;
     justify-content: center; }
@@ -227,7 +266,10 @@ body {
     background: #E3E3DF;
     padding: 6px 7px;
     z-index: 5;
-    font-size: 13px; }
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
   .option input::placeholder {
     color: rgba(0, 0, 0, 0.8); }
   .option input {
@@ -236,11 +278,10 @@ body {
     border: none;
     border-radius: 0;
     outline: none;
-    border-right: solid 1px #E3E3DF;
-    border-top: solid 1px #E3E3DF;
     border-bottom: solid 1px #E3E3DF;
     font-family: Sniglet;
-    font-size: 12px; }
+    font-size: 12px;
+    background-color: transparent; }
   .option .date {
     width: 100px;
     text-align: left;

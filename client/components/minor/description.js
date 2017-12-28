@@ -3,12 +3,17 @@ import html from "dom-template-strings";
 class Component extends HTMLElement {
   constructor() {
     super();
+    this.getData = this.getData.bind(this);
   }
 
   connectedCallback() {
     const body = this.createBody();
     this.appendChild(body);
     this.checkHashtag();
+  }
+
+  getData() {
+    return this.querySelector("#description-value").innerHTML;
   }
 
   checkHashtag() {

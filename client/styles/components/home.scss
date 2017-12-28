@@ -1,4 +1,7 @@
-body-el {
+home-el {
+  display: flex;
+  flex-flow: row;
+
   #create-new-tracker {
     width: 200px;
     height: 220px;

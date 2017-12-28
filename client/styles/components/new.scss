@@ -1,0 +1,30 @@
+newtracker-el {
+  flex-flow: column;
+  align-items: center;
+  #actions {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-self: flex-start;
+
+    span {
+      padding: 8px 15px;
+      color: $white;
+      cursor: pointer;
+      box-shadow: $boxshadow;
+      background: rgba($dark-grey, 0.7);
+      transition: 0.2s;
+      margin: 0 10px;
+
+      &:hover {
+        background: rgba($dark-grey, 0.8);
+        transition: 0.2s;
+      }
+
+      &:active {
+        background: rgba($dark-grey, 0.9);
+        transition: 0.2s;
+      }
+    }
+  }
+}

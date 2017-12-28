@@ -1,16 +1,17 @@
-@keyframes swing {
+@keyframes shake {
   from {
-    transform-origin: top;
-    transform: rotateX(0);
+    transform: rotateZ(0);
   }
 
-  45% {
-    transform-origin: top;
-    transform: rotateX(-60deg);
+  25% {
+    transform: rotateZ(-5deg);
+  }
+
+  65% {
+    transform: rotateZ(5deg);
   }
 
   to {
-    transform-origin: top;
-    transform: rotateX(0);
+    transform: rotateZ(0);
   }
 }

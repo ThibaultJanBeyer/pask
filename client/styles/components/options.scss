@@ -1,12 +1,12 @@
 #options {
   background: $white;
-  width: 75%;
   display: flex;
   flex-flow: row;
   padding: 15px 5px;
   justify-content: flex-start;
   align-items: center;
   box-shadow: $boxshadow;
+  width: 100%;
 
   #option-inputs {
     display: flex;
@@ -22,33 +22,5 @@
     position: absolute;
     right: 10px;
     top: 10px;
-  }
-
-  #add-new-tracker {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    position: absolute;
-    bottom: -48px;
-    left: -2px;
-    box-shadow: $boxshadow;
-    background: rgba($dark-grey, 0.7);
-    transition: 0.2s;
-
-    span {
-      padding: 8px 15px;
-      color: $white;
-      cursor: pointer;
-    }
-
-    &:hover {
-      background: rgba($dark-grey, 0.8);
-      transition: 0.2s;
-    }
-
-    &:active {
-      background: rgba($dark-grey, 0.9);
-      transition: 0.2s;
-    }
   }
 }

@@ -1,6 +1,4 @@
 import html from "dom-template-strings";
-import moment from "moment";
-import Pikaday from "pikaday";
 
 class Component extends HTMLElement {
   constructor(container) {
@@ -8,6 +6,9 @@ class Component extends HTMLElement {
     this.container = container;
     this.events = container.get("events");
     this.className = "container";
+    this.saveData = this.saveData.bind(this);
+    this.addSlider = this.addSlider.bind(this);
+    this.trackers = [];
   }
 
   connectedCallback() {
@@ -16,22 +17,28 @@ class Component extends HTMLElement {
     body.forEach(child => {
       this.appendChild(child);
     });
-
-    this.calender = new Pikaday({
-      field: document.getElementById("calender"),
-      format: "yyyy/mm/dd",
-      defaultDate: moment().format("MMM YYYY"),
-      setDefaultDate: true,
-      onSelect: date => {
-        this.calender._o.field.value = moment(date).format("L");
-      }
-    });
   }
 
   addSlider(slider) {
-    const Slider = customElements.get("slider-el");
-    const container = document.getElementById("slider-container");
-    container.appendChild(new Slider());
+    let Slider = customElements.get("slider-el"),
+      container = document.getElementById("slider-container"),
+      sliderElement = new Slider();
+
+    this.trackers.push(sliderElement);
+    container.appendChild(sliderElement);
+  }
+
+  saveData() {
+    let trackerData = this.trackers.map(tracker => {
+        return tracker.getData();
+      }),
+      optionsData = this.options.getData();
+
+    trackerData.forEach(item => {
+      if (!item.valid) {
+        console.log("unvalid item");
+      }
+    });
   }
 
   disconnectedCallback() {
@@ -39,42 +46,22 @@ class Component extends HTMLElement {
   }
 
   createBody() {
-    const Description = customElements.get("description-el"),
-      Comments = customElements.get("comments-el"),
-      description = new Description(),
-      comments = new Comments();
+    let Comments = customElements.get("comments-el"),
+      Options = customElements.get("options-el");
+    this.comments = new Comments();
+    this.options = new Options();
 
-    const addTracker = html`<div id="add-new-tracker">
+    let actions = html`<div id="actions">
                                 <span>Create new tracker</span>
+                                <span>Save</span>
                             </div>`;
-    addTracker.onclick = this.addSlider;
 
-    const options = html`<section class="fieldset" id="options">
-                          <label class="legend" for="options"> Options </label>
-                          <div id="option-inputs">
-                            <div id="title-container" class="option">
-                               <span class="label">Title</span>
-                               <input type="text" placeholder="Please enter title.." className="text-input" id="tracking-title"/>
-                            </div>              
-                            ${description}
-                          </div>                    
-                          <div id="date-container" class="option">
-                              <span class="label">Date</span>
-                              <input
-                                id="calender"
-                                class="date"
-                                type="text"
-                                value=${moment().format("L")}
-                                readonly
-                              />
-                          </div>                      
-                          ${addTracker}
-                        </section>`;
+    let slidersContainer = html`<section id="slider-container"></section>`;
 
-    const slidersContainer = html`<section id="slider-container"></section>`;
-    const commentsEl = html`${comments}`;
+    actions.children[0].onclick = this.addSlider;
+    actions.children[1].onclick = this.saveData;
 
-    return [options, slidersContainer, commentsEl];
+    return [this.options, actions, slidersContainer, this.comments];
   }
 }
 

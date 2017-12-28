@@ -5,11 +5,14 @@ class Component extends HTMLElement {
     super();
     this.slidesLenght = 30;
     this.input = this.input.bind(this);
+    this.destroy = this.destroy.bind(this);
+    this.getData = this.getData.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   connectedCallback() {
-    const body = this.createBody();
-    body.forEach(item => {
+    const elements = this.createBody();
+    elements.forEach(item => {
       this.appendChild(item);
     });
   }
@@ -29,46 +32,57 @@ class Component extends HTMLElement {
       } 302Z" ></path>`;
       x += 60;
       x2 += 60;
+      coneHeight[0] -= 5;
       columns.push(column);
     }
 
-    return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMax meet" viewBox="0 200 500 400" width="250" height="40">
+    return `<svg id="slider-cols" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMax meet" viewBox="0 100 100 500" width="180" height="40">
               ${columns.map(col => col).join(" ")};
             </svg>`;
   }
 
-  createLine(value = 10) {
-    let x = 5,
-      x2 = 40;
-
-    return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="500" height="10">
-              <line x1="20" y1="0" x2="100" y2="0" stroke-width="2" stroke="black"/>
-            </svg>`;
-  }
-
   getClassType(index, selection) {
-    let classtype = "";
+    let classname = "";
     selection = Math.ceil(selection / 3.5);
     switch (true) {
       case selection > index:
-        classtype = "range-lower";
+        classname = "range-lower";
         break;
       case selection < index:
-        classtype = "range-higher";
+        classname = "range-higher";
         break;
       case selection == index:
-        classtype = "range-selected";
+        classname = "range-selected";
         break;
     }
-    return classtype;
+    return classname;
+  }
+
+  getData() {
+    let name = this.querySelector(".tracker-name"),
+      value = this.querySelector("#range"),
+      valid = false;
+
+    if (!name.value) {
+      name.parentNode.classList.add("unvalid");
+    } else {
+      valid = true;
+    }
+
+    return { valid: valid, name: name.value, value: value.value };
   }
 
   input(event) {
-    const svg = this.getElementsByTagName("svg")[0],
+    const svgColumns = this.querySelector("#slider-cols"),
+      svgRange = this.querySelector("#range"),
+      rangeValue = this.querySelector(".rangeValue"),
       inputValue = event.target.value - 1;
 
-    for (let index in svg.children) {
-      const child = svg.children[index];
+    rangeValue.innerHTML = event.target.value;
+    svgRange.style.setProperty("--range-value", `${inputValue + 1}%`);
+
+    for (let index in svgColumns.children) {
+      const child = svgColumns.children[index];
       index = Number(index);
       if (child.nodeType == 1) {
         child.classList = this.getClassType(index, inputValue);
@@ -76,16 +90,34 @@ class Component extends HTMLElement {
     }
   }
 
+  destroy() {
+    this.remove();
+  }
+
+  validate(event) {
+    let eventParent = event.target.parentNode;
+    if (eventParent.classList.contains("unvalid")) {
+      eventParent.classList.remove("unvalid");
+    }
+  }
+
   createBody() {
     const defaultValue = 10,
       rangeVisual = html`${this.createSlider(defaultValue)}`,
-      rangeLine = html`${this.createLine(defaultValue)}`,
-      rangeInput = html`<input min="1" max="100" step="1" value=${
+      rangeValue = html`<div class="rangeValue">10</div>`,
+      deleteButton = html`<div class="destroy-tracker"><img src="public/images/delete3.svg" alt="delete" title="remove tracker" /></div>`,
+      rangeName = html`<div class="option range-name">
+                          <span class="label">Name</span>
+                          <input type="text" title="Tracker name" class="text-input tracker-name" />
+                      </div>`,
+      rangeInput = html`<input id="range" min="1" max="100" step="1" value=${
         defaultValue
       } type="range" />`;
 
+    deleteButton.onclick = this.destroy;
     rangeInput.oninput = this.input;
-    return [rangeVisual, rangeInput];
+    rangeName.children[1].onchange = this.validate;
+    return [rangeVisual, rangeValue, rangeName, rangeInput, deleteButton];
   }
 }
 

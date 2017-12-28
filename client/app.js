@@ -11,12 +11,10 @@ const container = {
 Engine.register(container);
 
 
-
 Engine.router
   .add("/", {
     enter: router => {
-      Engine.render("body-el");
-      console.log("home");
+      Engine.render("home-el");
     }
   })
   .add("/new", {

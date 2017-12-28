@@ -36,10 +36,10 @@ if (env)
 
 export default {
   input: "client/app.js",
-  name: "app",
   plugins: plugins,
   output: {
     file: "public/bundle.js",
-    format: "iife"
+    format: "iife",
+    name: "app"
   }
 };
