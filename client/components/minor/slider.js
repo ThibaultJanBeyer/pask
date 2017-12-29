@@ -60,16 +60,16 @@ class Component extends HTMLElement {
 
   getData() {
     let name = this.querySelector(".tracker-name"),
-      value = this.querySelector("#range"),
-      valid = false;
+      value = this.querySelector("#range");
 
     if (!name.value) {
       name.parentNode.classList.add("unvalid");
-    } else {
-      valid = true;
     }
 
-    return { valid: valid, name: name.value, value: value.value };
+    return {
+      name: name.value,
+      value: value.value
+    };
   }
 
   input(event) {
@@ -103,14 +103,14 @@ class Component extends HTMLElement {
 
   createBody() {
     const defaultValue = 10,
-      rangeVisual = html`${this.createSlider(defaultValue)}`,
-      rangeValue = html`<div class="rangeValue">10</div>`,
-      deleteButton = html`<div class="destroy-tracker"><img src="public/images/delete3.svg" alt="delete" title="remove tracker" /></div>`,
-      rangeName = html`<div class="option range-name">
+      rangeVisual = html `${this.createSlider(defaultValue)}`,
+      rangeValue = html `<div class="rangeValue">10</div>`,
+      deleteButton = html `<div class="destroy-tracker"><img src="public/images/delete3.svg" alt="delete" title="remove tracker" /></div>`,
+      rangeName = html `<div class="option range-name">
                           <span class="label">Name</span>
                           <input type="text" title="Tracker name" class="text-input tracker-name" />
                       </div>`,
-      rangeInput = html`<input id="range" min="1" max="100" step="1" value=${
+      rangeInput = html `<input id="range" min="1" max="100" step="1" value=${
         defaultValue
       } type="range" />`;
 

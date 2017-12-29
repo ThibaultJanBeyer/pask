@@ -29,17 +29,29 @@ class Component extends HTMLElement {
     let date = this.calender._o.field.value,
       title = this.querySelector("#tracking-title"),
       description = this.description.getData();
+    if (!title.value) {
+      title.parentNode.classList.add("unvalid");
+    }
+
+    return { date, title: title.value, description };
+  }
+
+  validate(event) {
+    let eventParent = event.target.parentNode;
+    if (eventParent.classList.contains("unvalid")) {
+      eventParent.classList.remove("unvalid");
+    }
   }
 
   createBody() {
     let Description = customElements.get("description-el");
     this.description = new Description();
-
+    let title = html`<input type="text" placeholder="Please enter title.." class="text-input" id="tracking-title"/>`;
     let options = html` <label class="legend" for="options"> Options </label>
                       <div id="option-inputs">
                         <div id="title-container" class="option">
                            <span class="label">Title</span>
-                           <input type="text" placeholder="Please enter title.." class="text-input" id="tracking-title"/>
+                           ${title}
                         </div>
                         ${this.description}
                       </div>
@@ -54,7 +66,7 @@ class Component extends HTMLElement {
                           />
                       </div>
                     `;
-
+    title.onchange = this.validate;
     return options;
   }
 }

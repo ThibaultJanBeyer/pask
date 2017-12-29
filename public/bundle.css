@@ -97,15 +97,17 @@ newtracker-el {
     display: flex;
     flex-flow: row;
     justify-content: center;
-    align-self: flex-start; }
+    align-self: flex-start;
+    margin-left: -7px; }
     newtracker-el #actions span {
       padding: 8px 15px;
       color: #FBFBFB;
       cursor: pointer;
       box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
       background: rgba(85, 85, 85, 0.7);
-      transition: 0.2s;
-      margin: 0 10px; }
+      transition: 0.2s; }
+      newtracker-el #actions span:nth-of-type(even) {
+        margin-left: 30px; }
       newtracker-el #actions span:hover {
         background: rgba(85, 85, 85, 0.8);
         transition: 0.2s; }
@@ -142,8 +144,36 @@ description-el [placeholder]:empty:before {
 description-el [placeholder]:empty:focus:before {
   content: ""; }
 
+notifier-el {
+  position: fixed;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  top: 50px;
+  right: 200px;
+  min-width: 150px;
+  z-index: 15; }
+  notifier-el .info-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 3px 5px;
+    margin: 6px 0;
+    height: 30px;
+    box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
+    color: #FBFBFB;
+    border: solid 1px rgba(227, 227, 223, 0.3); }
+    notifier-el .info-item.info {
+      background: #4183D7;
+      color: rgba(0, 0, 0, 0.8); }
+    notifier-el .info-item.error {
+      background: #EC644B;
+      color: #FBFBFB; }
+
 comments-el {
-  width: 50vw;
+  width: 57vw;
   margin: 0 auto; }
   comments-el #comments {
     background: #FBFBFB; }
@@ -182,14 +212,6 @@ slider-el {
     top: -10px;
     right: -10px;
     cursor: pointer; }
-  slider-el .unvalid {
-    background-image: url("images/attention2.svg");
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: 15px 15px;
-    transform-origin: top;
-    animation-name: shake;
-    animation-duration: 0.5s; }
   slider-el .range-name {
     margin: 0;
     position: absolute;
@@ -294,3 +316,12 @@ body {
     background-size: 15px 15px;
     background-repeat: no-repeat;
     background-position: 95% 50%; }
+
+.unvalid {
+  background-image: url("images/attention2.svg") !important;
+  background-position: top right !important;
+  background-repeat: no-repeat !important;
+  background-size: 15px 15px !important;
+  transform-origin: top !important;
+  animation-name: shake;
+  animation-duration: 0.5s; }

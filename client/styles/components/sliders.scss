@@ -39,16 +39,6 @@ slider-el {
     cursor: pointer;
   }
 
-  .unvalid {
-    background-image:url("images/attention2.svg");
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: 15px 15px;
-    transform-origin: top;
-    animation-name: shake;
-    animation-duration: 0.5s;
-  }
-
   .range-name {
     margin: 0;
     position: absolute;
@@ -66,14 +56,14 @@ slider-el {
   }
 
   .range-lower {
-    fill: $dark-green;
+    fill: $blue;
     transition: 0.2s ease;
   }
 
   .range-selected {
     transition: 0.2s ease;
     transform: scale(1.5, 1.6) translate(0, -8px);
-    fill: $dark-green;
+    fill: $blue;
   }
 
   .range-higher {
@@ -88,14 +78,14 @@ slider-el {
     -webkit-appearance: none;
     outline: none;
     margin-left: -10px;
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(var(--range-value), $dark-green), color-stop(var(--range-value), $grey));
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(var(--range-value), $blue), color-stop(var(--range-value), $grey));
   }
 
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 22px;
     width: 22px;
-    background: $dark-green;
+    background: $blue;
     cursor: pointer;
     margin-left: -3px;
     border-radius: 60px;
@@ -105,7 +95,7 @@ slider-el {
     -webkit-appearance: none;
     height: 22px;
     width: 22px;
-    background: $dark-green;
+    background: $blue;
     cursor: pointer;
     margin-left: -3px;
     border-radius: 60px;

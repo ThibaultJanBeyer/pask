@@ -207,13 +207,18 @@ class Component$2 extends HTMLElement {
     let trackerData = this.trackers.map(tracker => {
         return tracker.getData();
       }),
-      optionsData = this.options.getData();
+      optionsData = this.options.getData(),
+      valid = true;
 
     trackerData.forEach(item => {
-      if (!item.valid) {
-        console.log("unvalid item");
+      if (!item.name) {
+        valid = false;
       }
     });
+
+    if(!valid) {
+       this.events.emit("info", { msg: "Please fill required information!", type:"error" });
+    }
   }
 
   disconnectedCallback() {
@@ -241,20 +246,27 @@ class Component$2 extends HTMLElement {
 }
 
 class Component$4 extends HTMLElement {
-  constructor() {
+  constructor(container) {
     super();
+    this.events = container.get("events");
+    this.api = container.get("api");
   }
 
   connectedCallback() {
-    this.createBody();
+    this.events.on("info", this.displayInfo.bind(this));
   }
 
-  createBody() {
-    const containerElement = `<fieldset id="tracker-actions">
-                                <legend>Actions</legend>
-                              </fieldset>`;
+  displayInfo(data) {
+    let typeClass = data.type == "info" ? "info" : "error",
+      info = domTemplateStrings`<div class='info-item ${typeClass}'>
+                      <span>${data.msg}</span>
+                    </div>`;
 
-    this.innerHTML = containerElement;
+    this.appendChild(info);
+
+    setTimeout(() => {
+      this.removeChild(info);
+    }, 6000);
   }
 }
 
@@ -17170,17 +17182,29 @@ class Component$8 extends HTMLElement {
     let date = this.calender._o.field.value,
       title = this.querySelector("#tracking-title"),
       description = this.description.getData();
+    if (!title.value) {
+      title.parentNode.classList.add("unvalid");
+    }
+
+    return { date, title: title.value, description };
+  }
+
+  validate(event) {
+    let eventParent = event.target.parentNode;
+    if (eventParent.classList.contains("unvalid")) {
+      eventParent.classList.remove("unvalid");
+    }
   }
 
   createBody() {
     let Description = customElements.get("description-el");
     this.description = new Description();
-
+    let title = domTemplateStrings`<input type="text" placeholder="Please enter title.." class="text-input" id="tracking-title"/>`;
     let options = domTemplateStrings` <label class="legend" for="options"> Options </label>
                       <div id="option-inputs">
                         <div id="title-container" class="option">
                            <span class="label">Title</span>
-                           <input type="text" placeholder="Please enter title.." class="text-input" id="tracking-title"/>
+                           ${title}
                         </div>
                         ${this.description}
                       </div>
@@ -17195,7 +17219,7 @@ class Component$8 extends HTMLElement {
                           />
                       </div>
                     `;
-
+    title.onchange = this.validate;
     return options;
   }
 }
@@ -17233,40 +17257,49 @@ class Component$12 extends HTMLElement {
   connectedCallback() {
     const body = this.createBody();
     this.appendChild(body);
-    this.checkHashtag();
   }
 
   getData() {
-    return this.querySelector("#description-value").innerHTML;
+    let data = this.querySelector("#description-value");
+    if (!data.innerHTML) {
+      data.parentNode.classList.add("unvalid");
+    }
+    return data.innerHTML;
   }
 
-  checkHashtag() {
-    const descriptionValue = document.getElementById("description-value"),
-      testHash = new RegExp(/(#[^\s]*)/g);
-    descriptionValue.oninput = event => {
-      const range = document.createRange(),
-        selection = window.getSelection();
-      const text = event.target.textContent,
-        newText = text.replace(testHash, '<span class="hashtag">$1</span>');
-      descriptionValue.innerHTML = newText;
-      range.selectNodeContents(descriptionValue);
-      range.collapse(false);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    };
+  checkHashtag(event) {
+    const testHash = new RegExp(/(#[^\s]*)/g);
+    let descriptionValue = event.target;
+    let range = document.createRange(),
+      selection = window.getSelection();
+    let text = event.target.textContent,
+      newText = text.replace(testHash, '<span class="hashtag">$1</span>');
+    descriptionValue.innerHTML = newText;
+    range.selectNodeContents(descriptionValue);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    if (descriptionValue.parentNode.classList.contains("unvalid")) {
+      descriptionValue.parentNode.classList.remove("unvalid");
+    }
   }
 
   createBody() {
-    return domTemplateStrings`<section class="option" id="description">
+    let editor = domTemplateStrings`<div
+         class="text-input"
+         placeholder="Please enter description..."
+         id="description-value"
+         type="text"
+         contenteditable
+       ></div>`,
+      container = domTemplateStrings`<section class="option" id="description">
                           <span class="label">Description</span>
-                          <div
-                           class="text-input"
-                           placeholder="Please enter description..."
-                           id="description-value"
-                           type="text"
-                           contenteditable
-                         ></div>
+                          ${editor}
                         </section>`;
+
+    editor.oninput = this.checkHashtag;
+    return container;
   }
 }
 
@@ -17330,16 +17363,16 @@ class Component$14 extends HTMLElement {
 
   getData() {
     let name = this.querySelector(".tracker-name"),
-      value = this.querySelector("#range"),
-      valid = false;
+      value = this.querySelector("#range");
 
     if (!name.value) {
       name.parentNode.classList.add("unvalid");
-    } else {
-      valid = true;
     }
 
-    return { valid: valid, name: name.value, value: value.value };
+    return {
+      name: name.value,
+      value: value.value
+    };
   }
 
   input(event) {
@@ -17373,14 +17406,14 @@ class Component$14 extends HTMLElement {
 
   createBody() {
     const defaultValue = 10,
-      rangeVisual = domTemplateStrings`${this.createSlider(defaultValue)}`,
-      rangeValue = domTemplateStrings`<div class="rangeValue">10</div>`,
-      deleteButton = domTemplateStrings`<div class="destroy-tracker"><img src="public/images/delete3.svg" alt="delete" title="remove tracker" /></div>`,
-      rangeName = domTemplateStrings`<div class="option range-name">
+      rangeVisual = domTemplateStrings `${this.createSlider(defaultValue)}`,
+      rangeValue = domTemplateStrings `<div class="rangeValue">10</div>`,
+      deleteButton = domTemplateStrings `<div class="destroy-tracker"><img src="public/images/delete3.svg" alt="delete" title="remove tracker" /></div>`,
+      rangeName = domTemplateStrings `<div class="option range-name">
                           <span class="label">Name</span>
                           <input type="text" title="Tracker name" class="text-input tracker-name" />
                       </div>`,
-      rangeInput = domTemplateStrings`<input id="range" min="1" max="100" step="1" value=${
+      rangeInput = domTemplateStrings `<input id="range" min="1" max="100" step="1" value=${
         defaultValue
       } type="range" />`;
 
@@ -17398,7 +17431,7 @@ class Component$14 extends HTMLElement {
 var components = Object.freeze({
 	home: Component,
 	newtracker: Component$2,
-	actions: Component$4,
+	notifier: Component$4,
 	comments: Component$6,
 	options: Component$8,
 	tracker: Component$10,
@@ -17465,7 +17498,7 @@ class EventEmmitter {
   emit(name, data) {
     if (this.events[name]) {
       this.events[name].forEach(callFunc => {
-        callFunc.apply(this, data);
+        callFunc.call(this, data);
       });
     } else {
       console.log(`Emit reciever for ${name} not found!`);
@@ -17958,6 +17991,12 @@ class Engine {
   render(name) {
     const Element = customElements.get(name),
       component = new Element(this.container);
+      document.body.appendChild(component);
+  }
+
+  renderPage(name) {
+    const Element = customElements.get(name),
+      component = new Element(this.container);
 
     if (this.activeComponent) {
       document.body.removeChild(this.activeComponent);
@@ -17997,17 +18036,17 @@ const container = {
 };
 
 Engine$1.register(container);
-
+Engine$1.render("notifier-el");
 
 Engine$1.router
   .add("/", {
     enter: router => {
-      Engine$1.render("home-el");
+      Engine$1.renderPage("home-el");
     }
   })
   .add("/new", {
     enter: () => {
-      Engine$1.render("newtracker-el");
+      Engine$1.renderPage("newtracker-el");
     }
   })
   .start({

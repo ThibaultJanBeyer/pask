@@ -9,17 +9,17 @@ const container = {
 };
 
 Engine.register(container);
-
+Engine.render("notifier-el");
 
 Engine.router
   .add("/", {
     enter: router => {
-      Engine.render("home-el");
+      Engine.renderPage("home-el");
     }
   })
   .add("/new", {
     enter: () => {
-      Engine.render("newtracker-el");
+      Engine.renderPage("newtracker-el");
     }
   })
   .start({

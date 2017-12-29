@@ -32,13 +32,18 @@ class Component extends HTMLElement {
     let trackerData = this.trackers.map(tracker => {
         return tracker.getData();
       }),
-      optionsData = this.options.getData();
+      optionsData = this.options.getData(),
+      valid = true;
 
     trackerData.forEach(item => {
-      if (!item.valid) {
-        console.log("unvalid item");
+      if (!item.name) {
+        valid = false;
       }
     });
+
+    if(!valid) {
+       this.events.emit("info", { msg: "Please fill required information!", type:"error" });
+    }
   }
 
   disconnectedCallback() {

@@ -9,6 +9,12 @@ class Engine {
   render(name) {
     const Element = customElements.get(name),
       component = new Element(this.container);
+      document.body.appendChild(component);
+  }
+
+  renderPage(name) {
+    const Element = customElements.get(name),
+      component = new Element(this.container);
 
     if (this.activeComponent) {
       document.body.removeChild(this.activeComponent);

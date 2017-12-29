@@ -5,6 +5,7 @@
 @import "./components/home.scss";
 @import "./components/new.scss";
 @import "./components/description.scss";
+@import "./components/notifier.scss";
 @import "./components/comments.scss";
 @import "./components/sliders.scss";
 
@@ -81,4 +82,14 @@ body {
     background-repeat: no-repeat;
     background-position: 95% 50%;
   }
+}
+
+.unvalid {
+  background-image:url("images/attention2.svg")!important;
+  background-position: top right !important;
+  background-repeat: no-repeat !important;
+  background-size: 15px 15px !important;
+  transform-origin: top !important;
+  animation-name: shake;
+  animation-duration: 0.5s;
 }

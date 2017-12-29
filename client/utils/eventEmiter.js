@@ -21,7 +21,7 @@ class EventEmmitter {
   emit(name, data) {
     if (this.events[name]) {
       this.events[name].forEach(callFunc => {
-        callFunc.apply(this, data);
+        callFunc.call(this, data);
       });
     } else {
       console.log(`Emit reciever for ${name} not found!`);
