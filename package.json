@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": " npm run scss | node --experimental-modules ./server/index.mjs | rollup --watch --config rollup.js ",
+    "dev": " npm run scss| rollup --watch --config rollup.js  | node --experimental-modules ./server/index.mjs ",
     "scss": "node-sass -w -r client/styles/main.scss public/bundle.css",
     "build": "NODE_ENV=production rollup --config rollup.js || autoprefixer -b 'last 2 versions' < public/bundle.css"
   },
@@ -33,6 +33,7 @@
     "body-parser": "^1.16.1",
     "cors": "^2.8.4",
     "express": "^4.14.1",
+    "mongoose": "^5.0.0-rc0",
     "node-fetch": "^1.7.3",
     "page": "^1.7.1",
     "riot-route": "^3.1.2",

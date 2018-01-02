@@ -180,6 +180,7 @@ class Component$2 extends HTMLElement {
     super();
     this.container = container;
     this.events = container.get("events");
+    this.api = container.get("api");
     this.className = "container";
     this.saveData = this.saveData.bind(this);
     this.addSlider = this.addSlider.bind(this);
@@ -216,8 +217,13 @@ class Component$2 extends HTMLElement {
       }
     });
 
-    if(!valid) {
-       this.events.emit("info", { msg: "Please fill required information!", type:"error" });
+    if (!valid) {
+      this.events.emit("info", {
+        msg: "Please fill required information!",
+        type: "error"
+      });
+    } else {
+      this.api.saveTracker({trackerData, optionsData});
     }
   }
 
@@ -11628,6 +11634,8 @@ function createInvalid (flags) {
     return m;
 }
 
+// Plugins that add properties should also add the key here (null value),
+// so we can properly clone ourselves.
 var momentProperties = hooks.momentProperties = [];
 
 function copyConfig(to, from) {
@@ -11719,6 +11727,7 @@ function toInt(argumentForCoercion) {
     return value;
 }
 
+// compare two arrays, return the number of differences
 function compareArrays(array1, array2, dontConvert) {
     var len = Math.min(array1.length, array2.length),
         lengthDiff = Math.abs(array1.length - array2.length),
@@ -12171,6 +12180,8 @@ var MILLISECOND = 6;
 var WEEK = 7;
 var WEEKDAY = 8;
 
+// FORMATTING
+
 addFormatToken('Y', 0, 0, function () {
     var y = this.year();
     return y <= 9999 ? '' + y : '+' + y;
@@ -12606,6 +12617,7 @@ function createUTCDate (y) {
     return date;
 }
 
+// start-of-first-week - start-of-year
 function firstWeekOffset(year, dow, doy) {
     var // first-week day -- which january is always in the first week (4 for iso, 1 for other)
         fwd = 7 + dow - doy,
@@ -12667,6 +12679,8 @@ function weeksInYear(year, dow, doy) {
     return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
 }
 
+// FORMATTING
+
 addFormatToken('w', ['ww', 2], 'wo', 'week');
 addFormatToken('W', ['WW', 2], 'Wo', 'isoWeek');
 
@@ -12723,6 +12737,8 @@ function getSetISOWeek (input) {
     var week = weekOfYear(this, 1, 4).week;
     return input == null ? week : this.add((input - week) * 7, 'd');
 }
+
+// FORMATTING
 
 addFormatToken('d', 0, 'do', 'day');
 
@@ -13075,6 +13091,8 @@ function computeWeekdaysParse () {
     this._weekdaysMinStrictRegex = new RegExp('^(' + minPieces.join('|') + ')', 'i');
 }
 
+// FORMATTING
+
 function hFormat() {
     return this.hours() % 12 || 12;
 }
@@ -13207,6 +13225,10 @@ function localeMeridiem (hours, minutes, isLower) {
 // this rule.
 var getSetHour = makeGetSet('Hours', true);
 
+// months
+// week
+// weekdays
+// meridiem
 var baseConfig = {
     calendar: defaultCalendar,
     longDateFormat: defaultLongDateFormat,
@@ -13227,6 +13249,7 @@ var baseConfig = {
     meridiemParse: defaultLocaleMeridiemParse
 };
 
+// internal storage for locale config files
 var locales = {};
 var localeFamilies = {};
 var globalLocale;
@@ -13580,6 +13603,8 @@ function dayOfYearFromWeekInfo(config) {
     }
 }
 
+// iso 8601 regex
+// 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
 var extendedIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/;
 var basicIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/;
 
@@ -13800,6 +13825,7 @@ hooks.createFromInputFallback = deprecate(
     }
 );
 
+// constant that refers to the ISO standard
 hooks.ISO_8601 = function () {};
 
 // constant that refers to the RFC 2822 form
@@ -13903,6 +13929,7 @@ function meridiemFixWrap (locale, hour, meridiem) {
     }
 }
 
+// date from string and array of format strings
 function configFromStringAndArray(config) {
     var tempConfig,
         bestMoment,
@@ -14199,6 +14226,8 @@ function absRound (number) {
     }
 }
 
+// FORMATTING
+
 function offset (token, separator) {
     addFormatToken(token, 0, 0, function () {
         var offset = this.utcOffset();
@@ -14417,6 +14446,7 @@ function isUtc () {
     return this.isValid() ? this._isUTC && this._offset === 0 : false;
 }
 
+// ASP.NET json date format regex
 var aspNetRegex = /^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/;
 
 // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
@@ -14529,6 +14559,7 @@ function momentsDifference(base, other) {
     return res;
 }
 
+// TODO: remove 'name' arg after deprecation is removed
 function createAdder(direction, name) {
     return function (val, period) {
         var dur, tmp;
@@ -14793,6 +14824,9 @@ function toNow (withoutSuffix) {
     return this.to(createLocal(), withoutSuffix);
 }
 
+// If passed a locale key, it will set the locale for this
+// instance.  Otherwise, it will return the locale configuration
+// variables for this instance.
 function locale (key) {
     var newLocaleData;
 
@@ -14937,6 +14971,8 @@ function creationData() {
     };
 }
 
+// FORMATTING
+
 addFormatToken(0, ['gg', 2], 0, function () {
     return this.weekYear() % 100;
 });
@@ -15032,6 +15068,8 @@ function setWeekAll(weekYear, week, weekday, dow, doy) {
     return this;
 }
 
+// FORMATTING
+
 addFormatToken('Q', 0, 'Qo', 'quarter');
 
 // ALIASES
@@ -15054,6 +15092,8 @@ addParseToken('Q', function (input, array) {
 function getSetQuarter (input) {
     return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
 }
+
+// FORMATTING
 
 addFormatToken('D', ['DD', 2], 'Do', 'date');
 
@@ -15084,6 +15124,8 @@ addParseToken('Do', function (input, array) {
 
 var getSetDayOfMonth = makeGetSet('Date', true);
 
+// FORMATTING
+
 addFormatToken('DDD', ['DDDD', 3], 'DDDo', 'dayOfYear');
 
 // ALIASES
@@ -15110,6 +15152,8 @@ function getSetDayOfYear (input) {
     return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
 }
 
+// FORMATTING
+
 addFormatToken('m', ['mm', 2], 0, 'minute');
 
 // ALIASES
@@ -15130,6 +15174,8 @@ addParseToken(['m', 'mm'], MINUTE);
 
 var getSetMinute = makeGetSet('Minutes', false);
 
+// FORMATTING
+
 addFormatToken('s', ['ss', 2], 0, 'second');
 
 // ALIASES
@@ -15149,6 +15195,8 @@ addParseToken(['s', 'ss'], SECOND);
 // MOMENTS
 
 var getSetSecond = makeGetSet('Seconds', false);
+
+// FORMATTING
 
 addFormatToken('S', 0, 0, function () {
     return ~~(this.millisecond() / 100);
@@ -15208,6 +15256,8 @@ for (token = 'S'; token.length <= 9; token += 'S') {
 // MOMENTS
 
 var getSetMillisecond = makeGetSet('Milliseconds', false);
+
+// FORMATTING
 
 addFormatToken('z',  0, 0, 'zoneAbbr');
 addFormatToken('zz', 0, 0, 'zoneName');
@@ -15859,6 +15909,8 @@ proto$2.toIsoString = deprecate('toIsoString() is deprecated. Please use toISOSt
 proto$2.lang = lang;
 
 // Side effect imports
+
+// FORMATTING
 
 addFormatToken('X', 0, 0, 'unix');
 addFormatToken('x', 0, 0, 'valueOf');
@@ -17439,6 +17491,11 @@ var components = Object.freeze({
 	slider: Component$14
 });
 
+const urls = {
+  tracker: "http://localhost:8080/api/tracker",
+  saveTracker: "/save"
+};
+
 class API {
   constructor() {
     this.url = "http://localhost:8080/api/";
@@ -17455,21 +17512,30 @@ class API {
   }
 
   async get(url) {
-    const method = "GET",
+    let method = "GET",
       settings = this.settings;
     settings.method = method;
-    const response = await fetch(url, settings).catch(err => console.log(err));
+    let response = await fetch(url, settings).catch(err => console.log(err));
     return await response.json();
   }
 
   async post(url, data) {
-    const method = "POST",
+    let method = "POST",
       settings = this.settings;
-    settings.method = method;
-    const response = await fetch(url, this.settings).catch(err =>
+      settings.method = method;
+      settings.body = JSON.stringify(data);
+      console.log(data);
+    let response = await fetch(url, this.settings).catch(err =>
       console.log(err)
     );
+
     return await response.json();
+  }
+
+  async saveTracker(data) {
+    let url = urls.tracker + urls.saveTracker;
+    let response = await this.post(url, data);
+    console.log(response);
   }
 }
 

@@ -1,3 +1,8 @@
+const urls = {
+  tracker: "http://localhost:8080/api/tracker",
+  saveTracker: "/save"
+};
+
 class API {
   constructor() {
     this.url = "http://localhost:8080/api/";
@@ -14,21 +19,30 @@ class API {
   }
 
   async get(url) {
-    const method = "GET",
+    let method = "GET",
       settings = this.settings;
     settings.method = method;
-    const response = await fetch(url, settings).catch(err => console.log(err));
+    let response = await fetch(url, settings).catch(err => console.log(err));
     return await response.json();
   }
 
   async post(url, data) {
-    const method = "POST",
+    let method = "POST",
       settings = this.settings;
-    settings.method = method;
-    const response = await fetch(url, this.settings).catch(err =>
+      settings.method = method;
+      settings.body = JSON.stringify(data);
+      console.log(data);
+    let response = await fetch(url, this.settings).catch(err =>
       console.log(err)
     );
+
     return await response.json();
+  }
+
+  async saveTracker(data) {
+    let url = urls.tracker + urls.saveTracker;
+    let response = await this.post(url, data);
+    console.log(response);
   }
 }
 

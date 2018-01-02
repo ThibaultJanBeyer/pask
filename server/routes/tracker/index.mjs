@@ -1,5 +1,6 @@
 import express from "express";
 import API from "../../utils/api";
+import { Tracker } from "../../utils/mongo";
 
 const routes = express.Router();
 
@@ -15,7 +16,9 @@ routes.get("/single", (req, res) => {
 
 routes.post("/save", (req, res) => {
   const data = req.body;
-  res.send("GET handler for /dogs route.");
+  console.log(data);
+  // let newTracker = new Tracker({})
+  res.send({ msg: "tracker adada"});
 });
 
 export default routes;

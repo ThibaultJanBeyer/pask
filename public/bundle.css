@@ -17,7 +17,7 @@
   justify-content: flex-start;
   align-items: center;
   box-shadow: 3px 4px 6px 1px rgba(0, 0, 0, 0.2);
-  width: 100%; }
+  width: 73%; }
   #options #option-inputs {
     display: flex;
     flex-flow: column;
@@ -98,7 +98,7 @@ newtracker-el {
     flex-flow: row;
     justify-content: center;
     align-self: flex-start;
-    margin-left: -7px; }
+    margin-left: 13%; }
     newtracker-el #actions span {
       padding: 8px 15px;
       color: #FBFBFB;

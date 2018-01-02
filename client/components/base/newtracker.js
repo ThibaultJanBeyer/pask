@@ -5,6 +5,7 @@ class Component extends HTMLElement {
     super();
     this.container = container;
     this.events = container.get("events");
+    this.api = container.get("api");
     this.className = "container";
     this.saveData = this.saveData.bind(this);
     this.addSlider = this.addSlider.bind(this);
@@ -41,8 +42,13 @@ class Component extends HTMLElement {
       }
     });
 
-    if(!valid) {
-       this.events.emit("info", { msg: "Please fill required information!", type:"error" });
+    if (!valid) {
+      this.events.emit("info", {
+        msg: "Please fill required information!",
+        type: "error"
+      });
+    } else {
+      this.api.saveTracker({trackerData, optionsData});
     }
   }
 
